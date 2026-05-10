@@ -34,11 +34,9 @@ class LivreController extends Controller
     {
         $request->validate([
             'titre'              => 'required|string',
-            // ✅ AJOUTÉ
             'isbn'               => 'nullable|string|unique:livres,isbn',
             'année_publication'  => 'required|numeric',
             'genre'              => 'required|string',
-            // ✅ AJOUTÉ
             'description'        => 'nullable|string',
             'résumé'             => 'required|string',
             'langue'             => 'required|string',
@@ -49,19 +47,16 @@ class LivreController extends Controller
         ]);
 
         $livre = new Livre();
-
-        // ✅ AJOUTÉ
         $livre->isbn               = $request->input('isbn');
         $livre->titre              = $request->input('titre');
         $livre->année_publication  = $request->input('année_publication');
         $livre->genre              = $request->input('genre');
-        // ✅ AJOUTÉ
         $livre->description        = $request->input('description');
         $livre->résumé             = $request->input('résumé');
         $livre->langue             = $request->input('langue');
         $livre->nombre_exemplaires = $request->input('nombre_exemplaires');
 
-        // Auteur
+       
         $auteur = Auteur::where('nom', $request->nom)->first();
         if ($auteur) {
             $livre->auteur_id = $auteur->id;
@@ -73,13 +68,11 @@ class LivreController extends Controller
             $livre->auteur_id = $auteur->id;
         }
 
-        // Image
         if ($request->hasFile('image_couverture')) {
             $livre->image_couverture = $request->file('image_couverture')
                                               ->store('images', 'public');
         }
 
-        // Disponible
         $livre->disponible = $request->has('disponible') ? 1 : 0;
 
         $livre->save();
@@ -125,8 +118,6 @@ class LivreController extends Controller
             'image_couverture'   => 'nullable|image|mimes:png,jpg,jpeg',
         ]);
 
-        // ✅ CORRIGÉ : utiliser fill() au lieu de update()
-        // pour pouvoir ajouter l'image avant de sauvegarder
         $livre->fill($request->only([
             'titre',
             'isbn',
@@ -139,9 +130,7 @@ class LivreController extends Controller
         $livre->nombre_exemplaires = $request->input('nombre_exemplaires');
         $livre->disponible         = $request->input('disponible');
 
-        // ✅ CORRIGÉ : image dans le même bloc avant save()
         if ($request->hasFile('image_couverture')) {
-            // Supprimer ancienne image
             if ($livre->image_couverture) {
                 Storage::disk('public')->delete($livre->image_couverture);
             }
@@ -149,7 +138,6 @@ class LivreController extends Controller
                                             ->store('images', 'public');
         }
 
-        // ✅ UN SEUL save() à la fin pour tout sauvegarder
         $livre->save();
 
         return redirect()->route('livres.show', $livre->id)
@@ -160,7 +148,6 @@ class LivreController extends Controller
     {
         $livre = Livre::findOrFail($id);
 
-        // ✅ AJOUTÉ : supprimer image lors de la suppression
         if ($livre->image_couverture) {
             Storage::disk('public')->delete($livre->image_couverture);
         }
