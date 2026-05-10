@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
+            $table->string('nationalite')->nullable();
+            $table->date('date_naissance')->nullable();
+            $table->longText('biographie')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('telephone')->nullable();
             $table->timestamps();
         });
     }

@@ -13,17 +13,18 @@ return new class extends Migration
     {
         if (!Schema::hasTable('livres')) {
         Schema::create('livres', function (Blueprint $table) {
-            $table->id();
+             $table->id();
             $table->string('titre');
-            $table->integer('année_publication');
-            $table->string('genre');
-            $table->text('résumé');
-            $table->string('langue');
+            $table->string('isbn')->unique()->nullable();
+            $table->year('annee_publication')->nullable();
+            $table->string('genre')->nullable();
+            $table->text('description')->nullable();
+            $table->text('resume')->nullable();
+            $table->string('langue')->nullable();
             $table->integer('nombre_exemplaires')->default(0);
             $table->boolean('disponible')->default(true);
             $table->string('image_couverture')->nullable();
-            $table->unsignedBigInteger('auteur_id');
-            $table->foreign('auteur_id')->references('id')->on('auteurs')->onDelete('cascade');
+            $table->foreignId('auteur_id')->constrained('auteurs')->onDelete('cascade');
             $table->timestamps();
         });
     }

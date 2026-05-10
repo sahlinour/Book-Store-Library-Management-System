@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="résumé" required  placeholder="Résumé">
+                        <input type="text" class="form-control" name="resume" required  placeholder="resume">
                     </div>
                 </div>
             </div>

@@ -10,8 +10,16 @@ class Auteur extends Model
     use HasFactory;
     
     protected $fillable = [
-        'nom',
+       'nom',
         'prenom',
+        'nationalite',
+        'date_naissance',
+        'biographie',
+        'email',
+        'telephone',
+    ];
+     protected $casts = [
+        'date_naissance' => 'date',
     ];
     
      public function livres()

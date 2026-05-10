@@ -13,6 +13,15 @@ class Emprunt extends Model
         'user_id',
         'date_emprunt',
         'date_retour',
+        'statut',
+        'prolongation',
+        'notes',
+    ];
+
+    protected $casts = [
+        'date_emprunt' => 'date',
+        'date_retour'  => 'date',
+        'prolongation' => 'boolean',
     ];
 
     public function user()
@@ -22,6 +31,18 @@ class Emprunt extends Model
     public function livre()
     {
         return $this->belongsTo(Livre::class);
+    }
+
+    public function scopeEnCours($query) {
+        return $query->where('statut', 'en_cours');
+    }
+
+    public function scopeEnRetard($query) {
+        return $query->where('statut', 'en_retard');
+    }
+
+    public function scopeRetournes($query) {
+        return $query->where('statut', 'retourne');
     }
 }
 

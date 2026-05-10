@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('emprunts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('livre_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('livre_id')->references('id')->on('livres')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('livre_id')->constrained('livres')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('date_emprunt');
-            $table->date('date_retour');
+            $table->date('date_retour')->nullable();
+            $table->enum('statut', ['en_cours', 'retourne', 'en_retard'])->default('en_cours');
+            $table->boolean('prolongation')->default(false);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -88,7 +88,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="résumé" required placeholder="Résumé" value="{{ $livre ? $livre->résumé : '' }}">
+                        <input type="text" class="form-control" name="resume" required placeholder="resume" value="{{ $livre ? $livre->resume : '' }}">
                     </div>
                 </div>
             </div>

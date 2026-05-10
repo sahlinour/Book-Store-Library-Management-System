@@ -10,14 +10,21 @@ class Livre extends Model
     use HasFactory;
     protected $fillable = [
         'titre',
-        'année_publication',
+        'isbn',
+        'annee_publication',
         'genre',
-        'résumé',
+        'description',
+        'resume',
         'langue',
         'nombre_exemplaires',
         'disponible',
         'image_couverture',
         'auteur_id',
+    ];
+
+    protected $casts = [
+        'disponible'         => 'boolean',
+        'nombre_exemplaires' => 'integer',
     ];
     
     public function auteur()

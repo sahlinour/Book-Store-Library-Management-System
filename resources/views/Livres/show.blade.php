@@ -79,7 +79,7 @@
                         <p class=""><strong>Titre:</strong> {{$livre->titre}}</p>
                         <p class=""><strong>Année de publication:</strong> {{$livre->année_publication}}</p>
                         <p class=""><strong>Genre:</strong> {{ $livre->genre }}</p>
-                        <p class=""><strong>Résumé:</strong> {{ $livre->résumé }}</p>
+                        <p class=""><strong>Résumé:</strong> {{ $livre->resume }}</p>
                         <p class=""><strong>Langue:</strong> {{ $livre->langue }}</p>
                         <p class=""><strong>Nombre d'exemplaires:</strong> {{ $livre->nombre_exemplaires }}</p>
                         <p class=""><strong>Disponible:</strong> {{ $livre->disponible }}</p>
